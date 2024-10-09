@@ -65,7 +65,7 @@
  *      - computeIfAbsent()
  *      - computeIfPresent()
  *      - foreach()
- *      - merge(()
+ *      - merge()
  *      - putAll()
  *      - replaceAll()
  *      - values()
@@ -157,7 +157,7 @@ class myHashMap<K,V> {
      *
      * Performs two parts.
      *   1) First invokes a very simple hash code generator which generates a 32-bit
-     *      integer. The mask (bit operation) masks off the sign bit )turns the
+     *      integer. The mask (bit operation) masks off the sign bit (turns the
      *      32-bit integer into a 31-bit non-negative integer).
      *   2) Second, it invokes a compressor expression (in this case, performing a
      *      MOD operation). This compresses the hash number to between 0 and
@@ -224,16 +224,37 @@ class myHashMap<K,V> {
         /*
          * ADD YOUR CODE HERE
          *
-         * Review the code in the whole object to understand teh data structures layout.
+         * Review the code in the whole object to understand the data structures layout.
          * Additionally, review the method put() for inserting a new Key / Value pair into
          * the HashMap. This method will do the opposite by removing an element. Do see
          * the return value discussion in this method's prologue to make sure the correct
          * return value is returned the invoking function based on the remove outcome.
          */
 
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+        HashNode<K, V> prevNode = null;
+
+        if (head == null) {
+            return null;
+        }
+        while (head != null) {
+            if (head.key.equals(key)) {
+                V value = head.value;
+
+                if (prevNode == null) {
+                    bucket.set(index, head.next);
+                } else {
+                    prevNode.next = head.next;
+                }
+                size--;
+                return value;
+            }
+            prevNode = head;
+            head = head.next;
+        }
         return null;
     }
-
 
     /**
      * Method: boolean remove(K, V)
@@ -399,14 +420,17 @@ class myHashMap<K,V> {
 
     public V replace(K key, V val) {
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-         *
-         * Make sure you return the proper value based on the outcome of this method's
-         * replace (see method's prologue above).
-         */
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+        V oldValue = null;
 
-        return val;
+        if (head == null) {
+            return null;
+        } else {
+            oldValue = head.value;
+            head.value = val;
+            return oldValue;
+        }
     }
 
     
