@@ -33,15 +33,24 @@ class HashingProblems {
 
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOU NAME AT TOP OF FILE
-         *
-         * Note: if NO values found in common between the HashMap and supplied array,
-         * returning 0.0 is NOT correct, as that is not the average value. Whereas
-         * returning 0.0/0.0 IS correct (which would return a non-number).
-         */
+        double sum = 0;
+        int matchingNums = 0;
 
-         return 0.0 / 0.0;
+        // Iterate through the array and check if each element is present in the Hashmap
+        for (int i = 0; i < array.length; i++){
+            int key = array[i];
+            if (map.containsKey(key)){
+                sum += map.get(key);
+                matchingNums++;
+            }
+        }
+        // Case for if no elements match
+        if (matchingNums == 0){
+            return 0.0 / 0.0;
+        } else {
+            // Return the sum divided by the amount of matching keys
+            return sum / matchingNums;
+        }
   }
 
 
@@ -56,13 +65,12 @@ class HashingProblems {
     
       ArrayList<String> result = new ArrayList<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
-
-
+      // Iterate through map and add values to array if their keys are divisible by 2
+      for (Integer key : map.keySet()){
+          if (key % 2 != 0){
+              result.add(map.get(key));
+          }
+      }
       return result;
   }
 

@@ -221,23 +221,17 @@ class myHashMap<K,V> {
 
     public V remove(K key) {
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * Review the code in the whole object to understand the data structures layout.
-         * Additionally, review the method put() for inserting a new Key / Value pair into
-         * the HashMap. This method will do the opposite by removing an element. Do see
-         * the return value discussion in this method's prologue to make sure the correct
-         * return value is returned the invoking function based on the remove outcome.
-         */
-
+        // Get bucket index from hash code generator and create head node using that index
         int index = getBucketIndex(key);
         HashNode<K, V> head = bucket.get(index);
         HashNode<K, V> prevNode = null;
 
+        // Case for if head is null
         if (head == null) {
             return null;
         }
+
+        // If key matches, assign the corresponding value to head node, remove the key, and adjust the size of the hashmap
         while (head != null) {
             if (head.key.equals(key)) {
                 V value = head.value;
@@ -392,8 +386,10 @@ class myHashMap<K,V> {
      */
 
     public V putIfAbsent(K key, V value) {
+        // Store original value for the current key
         V originalValue = get(key);
 
+        // If value is null, replace it with value passed in and return the old value
         if (originalValue == null ) {
             put(key, value);
             return null;
@@ -420,10 +416,12 @@ class myHashMap<K,V> {
 
     public V replace(K key, V val) {
 
+        // Get index from hash code generator and create head node
         int index = getBucketIndex(key);
         HashNode<K, V> head = bucket.get(index);
         V oldValue = null;
 
+        // Replace value only if currently mapped to some value
         if (head == null) {
             return null;
         } else {
@@ -451,12 +449,6 @@ class myHashMap<K,V> {
 
     public boolean replace(K key, V oldVal, V newVal) {
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * This method should apply the precondition (aka, the Key already exists with the
-         * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
-         */
         int index = getBucketIndex(key);
         HashNode<K, V> head = bucket.get(index);
 
