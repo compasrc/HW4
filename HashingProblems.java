@@ -10,10 +10,7 @@
  *  - twoSums
  */
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 class HashingProblems {
 
@@ -37,9 +34,8 @@ class HashingProblems {
         int matchingNums = 0;
 
         // Iterate through the array and check if each element is present in the Hashmap
-        for (int i = 0; i < array.length; i++){
-            int key = array[i];
-            if (map.containsKey(key)){
+        for (int key : array) {
+            if (map.containsKey(key)) {
                 sum += map.get(key);
                 matchingNums++;
             }
@@ -65,7 +61,7 @@ class HashingProblems {
     
       ArrayList<String> result = new ArrayList<>();
 
-      // Iterate through map and add values to array if their keys are divisible by 2
+      // Iterate through map and add values to array if their keys are not divisible by 2
       for (Integer key : map.keySet()){
           if (key % 2 != 0){
               result.add(map.get(key));
@@ -100,7 +96,7 @@ class HashingProblems {
    *
    * In order to solve this problem in O(n) complexity, utilize a HashMap (or a HashSet).
    *
-   * You are two solve this using a HashMap (or you can use a HashSet, which is implemented
+   * You are to solve this using a HashMap (or you can use a HashSet, which is implemented
    * using HashMap). To solve this, you should populate the HashMap (or HashSet) based on
    * the array (this will be complexity time on the order of 'n'). After populating the HashMap,
    * consider a for-loop that does a lookup (probe) of the HashMap (or HashSet) on each iteration
@@ -114,11 +110,23 @@ class HashingProblems {
 
   public int twoSums(int[] numbers, int k) {
 
-      /*
-       * ADD YOUR CODE HERE
-       */
+      // Create HashSet and variable to keep count
+      HashSet<Integer> set = new HashSet<>();
+      int x = 0;
 
-      return -1;
+      // Add array to the HashSet
+      for (int number : numbers){
+          set.add(number);
+      }
+      // Iterate through the set and increment x any time it contains a number minus k.
+      // This implies that since the set contains the difference between the current array element and k,
+      // there must be an array/set pair that have difference of k.
+      for (int number : numbers) {
+          if (set.contains(number - k)){
+              x++;
+          }
+      }
+      return x;
   }
 
 } /* end class HashingProblems */

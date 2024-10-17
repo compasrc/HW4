@@ -448,10 +448,11 @@ class myHashMap<K,V> {
      */
 
     public boolean replace(K key, V oldVal, V newVal) {
-
+        // Get index from hash code generator and create head node
         int index = getBucketIndex(key);
         HashNode<K, V> head = bucket.get(index);
 
+        // Return true if the head finds the old value and replace it with the new value
         if (head != null && head.value == oldVal){
             replace(key, newVal);
             return true;
